@@ -1,15 +1,13 @@
 <ion-header>
-  <ion-navbar>
-    <nav class="navbar">
-      <p align="center"><img src="assets/imgs/mobilehub.png" width="100" height="50"></p>
-    </nav>
+  <ion-navbar text-center class="bg-brown">
+    <img src="assets/imgs/mobilehub.png" width="100">
   </ion-navbar>
 </ion-header>
 
 <ion-content text-center>
-  
-  <h6>Minha localização</h6>
-      
+
+  <h6>Escolher destino...</h6>
+
   <p align="center">
     <button ion-button color="dark" round icon-right (click)="continue()" class="continue-btn">
       Continuar
@@ -17,6 +15,6 @@
     </button>
   </p>
 
-  <div #map id="map"></div>  
+  <div #map id="map"></div>
 
 </ion-content>
