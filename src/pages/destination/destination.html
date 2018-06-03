@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>ModalHub</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content text-center>
+  <p>Olá, seja bem-vindo!</p>
+  <p>Qual o seu nome?</p>
+
+  <form (ngSubmit)="continue()" #registerForm="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Nome</ion-label>
+        <ion-input [(ngModel)]="name" name="name" type="text" required></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div padding>
+      <button ion-button full type="submit" [disabled]="!name">Continuar</button>
+    </div>
+  </form>
+
+</ion-content>
