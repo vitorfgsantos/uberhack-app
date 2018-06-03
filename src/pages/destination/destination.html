@@ -6,14 +6,14 @@
 
 <ion-content text-center>
 
-  <h6>Escolher destino...</h6>
+  <h6 (click)="openAddressModal()">Escolher destino...</h6>
 
-  <p align="center">
+  <!-- <p align="center">
     <button ion-button color="dark" round icon-right (click)="continue()" class="continue-btn">
       Continuar
       <ion-icon name="arrow-forward"></ion-icon>
     </button>
-  </p>
+  </p> -->
 
   <div #map id="map"></div>
 

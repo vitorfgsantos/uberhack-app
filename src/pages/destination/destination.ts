@@ -4,6 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { HeatAreasService } from './../../services/heatareas.service';
 
 import { ParkingsPage } from './../parkings/parkings';
+import { AddressModalPage } from './address-modal/address-modal.component';
 
 declare var google;
 
@@ -94,11 +95,11 @@ export class DestinationPage {
   loadUserPosition() {
     this.geolocation.getCurrentPosition()
       .then((resp) => {
-        const position = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+        // const position = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+        const position = new google.maps.LatLng(-23.503035, -46.712907);
         const mapOptions = {
-          zoom: 18,
-          center: position,
-          // disableDefaultUI: true
+          zoom: 14,
+          center: position
         }
         this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
         const marker = new google.maps.Marker({
@@ -111,7 +112,10 @@ export class DestinationPage {
           lng: position.lng()
         };
 
-        this.initHeatMap(mapOptions);
+        setTimeout(() => {
+          this.initHeatMap(mapOptions);
+        }, 5000)
+
       }).catch((error) => {
         console.log('Erro ao recuperar sua posição', error);
       });
@@ -124,8 +128,33 @@ export class DestinationPage {
   }
 
   openAddressModal() {
-    // const modal = this.modalCtrl.create(ModalPage);
-    // modal.present();
+    const modal = this.modalCtrl.create(AddressModalPage);
+    modal.onDidDismiss(data => {
+      if (data) {
+
+        const position = new google.maps.LatLng(data.coordinates[0], data.coordinates[1]);
+        const mapOptions = {
+          zoom: 14,
+          center: position
+        }
+        this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        const marker = new google.maps.Marker({
+          position: position,
+          map: this.map
+        });
+
+        this.coordinates = {
+          lat: position.lat(),
+          lng: position.lng()
+        };
+
+        setTimeout(() => {
+          this.continue();
+        }, 3000)
+
+      }
+    });
+    modal.present();
   }
 
 }

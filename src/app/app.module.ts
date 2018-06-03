@@ -18,6 +18,7 @@ import { HeatAreasService } from './../services/heatareas.service';
 
 import { Geolocation } from '@ionic-native/geolocation';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
+import { AddressModalPage } from '../pages/destination/address-modal/address-modal.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
     ParkingsPage,
     RoutePage,
     RouteFinishedPage,
-    TabsPage
+    TabsPage,
+    AddressModalPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
     ParkingsPage,
     RoutePage,
     RouteFinishedPage,
-    TabsPage
+    TabsPage,
+    AddressModalPage
   ],
   providers: [
     StatusBar,
