@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController, NavParams } from 'ionic-angular';
 import { ModalsService } from '../../services/modals.service';
 
 @Component({
@@ -18,15 +18,21 @@ export class RouteFinishedPage {
 
   constructor(
     public navCtrl: NavController,
-    public modalsService: ModalsService
+    public modalsService: ModalsService,
+    public toastCtrl: ToastController,
+    public navParams: NavParams,
   ) {
+    let destinationCoordinates = navParams.get('coordinates');
+    let originCoordinates = navParams.get('originCoordinates');
+
     this.coordinates = {
-      origin: '-23.507172, -46.645806',
-      destination: '-23.513232, -46.670955'
+      origin: originCoordinates.lat + ', ' + originCoordinates.lng,
+      destination: destinationCoordinates.lat + ', ' + destinationCoordinates.lng
     };
 
     this.loadMapsModals();
     this.loadUberModals();
+    this.releasePaymentToastr();
   }
 
   loadMapsModals() {
@@ -41,6 +47,17 @@ export class RouteFinishedPage {
         this.mapsRouters[modalMode] = response;
         console.log(this.mapsRouters)
       });
+  }
+
+  releasePaymentToastr() {
+    const toast = this.toastCtrl.create({
+      message: 'O pagamento no valor de R$ 8,00 foi efetuado no seu cartão de crédito.',
+      duration: 6000,
+      position: 'bottom',
+      showCloseButton: true,
+      closeButtonText: 'OK'
+    });
+    toast.present();
   }
 
   loadUberModals() {

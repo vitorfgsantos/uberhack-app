@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { ParkingsService } from './../../services/parkings.service';
-import { RoutePage } from './../route/route';
 import { LaunchNavigatorOptions, LaunchNavigator } from '@ionic-native/launch-navigator';
 import { RouteFinishedPage } from '../route-finished/route-finished';
 
@@ -12,6 +11,7 @@ import { RouteFinishedPage } from '../route-finished/route-finished';
 export class ParkingsPage {
 
   coordinates: any;
+  originCoordinates: any
   parkings = undefined;
 
   constructor(
@@ -22,6 +22,7 @@ export class ParkingsPage {
     public launchNavigator: LaunchNavigator
   ) {
     this.coordinates = navParams.get('coordinates');
+    this.originCoordinates = navParams.get('originCoordinates');
     this.loadParkings();
   }
 
@@ -53,21 +54,18 @@ export class ParkingsPage {
             start: parking.address.street + ', ' + parking.address.number + ' - ' + parking.address.district + ', ' + parking.address.city + ' - ' + parking.address.state,
           };
 
-          this.launchNavigator.navigate('Toronto, ON', options)
-            .then(
-              success => {
-                this.navCtrl.push(RouteFinishedPage, {
-                  coordinates: this.coordinates,
-                  parking: parking
-                });
-              },
-              error => {
-                this.navCtrl.push(RouteFinishedPage, {
-                  coordinates: this.coordinates,
-                  parking: parking
-                });
-              }
-            );
+          this.launchNavigator.navigate(parking.address.street + ', ' + parking.address.number + ' - ' + parking.address.district + ', ' + parking.address.city + ' - ' + parking.address.state, options)
+            .then(success => {
+            }, error => {
+            });
+
+          setTimeout(() => {
+            this.navCtrl.push(RouteFinishedPage, {
+              coordinates: this.coordinates,
+              originCoordinates: this.originCoordinates,
+              parking: parking
+            });
+          }, 1000)
         }
       }]
     });

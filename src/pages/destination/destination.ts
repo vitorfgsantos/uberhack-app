@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, ToastController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HeatAreasService } from './../../services/heatareas.service';
 
@@ -16,25 +16,78 @@ export class DestinationPage {
 
   map: any;
   coordinates: any;
-
-  directionsService = new google.maps.DirectionsService();
-  directionsDisplay = new google.maps.DirectionsRenderer();
-  startPosition: any;
-  originPosition: string;
-  destinationPosition: string;
+  originCoordinates: any;
 
   constructor(
     public navCtrl: NavController,
     private geolocation: Geolocation,
     public modalCtrl: ModalController,
-    public heatAreasService: HeatAreasService
+    public heatAreasService: HeatAreasService,
+    public toastCtrl: ToastController
   ) { }
 
   ionViewDidLoad() {
     this.loadUserPosition();
   }
 
+  loadUserPosition() {
+    this.geolocation.getCurrentPosition()
+      .then((resp) => {
+        const position = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+        this.originCoordinates = {
+          lat: resp.coords.latitude,
+          lng: resp.coords.longitude
+        };
+        this.initMap(position);
+      })
+      .catch((error) => {
+        const position = new google.maps.LatLng(-23.508647, -46.651857);
+        this.originCoordinates = {
+          lat: -23.508647,
+          lng: -46.651857
+        };
+        this.initMap(position);
+      });
+  }
+
+  initMap(position) {
+    this.coordinates = {
+      lat: position.lat(),
+      lng: position.lng()
+    };
+
+    const mapOptions = {
+      zoom: 14,
+      center: position
+    }
+    this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    new google.maps.Marker({
+      position: position,
+      map: this.map
+    });
+
+    setTimeout(() => {
+      const toast = this.toastCtrl.create({
+        message: 'Seja bem-vindo! Você está no ponto indicado no mapa.',
+        duration: 3000,
+        position: 'bottom',
+      });
+      toast.present();
+    }, 500);
+
+    setTimeout(() => {
+      this.initHeatMap(mapOptions);
+    }, 5000);
+  }
+
   initHeatMap(mapOptions) {
+    const toast = this.toastCtrl.create({
+      message: 'Dê um zoom-out para ver o mapa de calor que já mapeamos. Se desejar, inicie uma viagem ao clicar em Escolher destino',
+      duration: 3000,
+      position: 'bottom',
+    });
+    toast.present();
+
     this.heatAreasService.loadHeatAreas()
       .subscribe(response => {
         let map, heatmap;
@@ -60,27 +113,6 @@ export class DestinationPage {
           'rgba(191, 0, 31, 1)',
           'rgba(255, 0, 0, 1)'
         ]);
-
-        // setTimeout(() => {
-        //   console.log('AQEE')
-
-        //   this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        //   this.directionsDisplay.setMap(this.map);
-
-        //   const marker = new google.maps.Marker({
-        //     // position: this.startPosition,
-        //     map: this.map,
-        //   });
-
-        //     const request = {
-        //       // Pode ser uma coordenada (LatLng), uma string ou um lugar
-        //       origin: '-23.542308, -46.632372',
-        //       destination: '-23.542351, -46.651552',
-        //       travelMode: 'DRIVING'
-        //     };
-        //     this.traceRoute(this.directionsService, this.directionsDisplay, request);
-        // }, 2000);
-
       });
   }
 
@@ -92,45 +124,18 @@ export class DestinationPage {
     });
   }
 
-  loadUserPosition() {
-    this.geolocation.getCurrentPosition()
-      .then((resp) => {
-        // const position = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-        const position = new google.maps.LatLng(-23.503035, -46.712907);
-        const mapOptions = {
-          zoom: 14,
-          center: position
-        }
-        this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        const marker = new google.maps.Marker({
-          position: position,
-          map: this.map
-        });
-
-        this.coordinates = {
-          lat: position.lat(),
-          lng: position.lng()
-        };
-
-        setTimeout(() => {
-          this.initHeatMap(mapOptions);
-        }, 5000)
-
-      }).catch((error) => {
-        console.log('Erro ao recuperar sua posição', error);
-      });
-  }
-
-  continue() {
-    this.navCtrl.push(ParkingsPage, {
-      coordinates: this.coordinates
-    });
-  }
 
   openAddressModal() {
     const modal = this.modalCtrl.create(AddressModalPage);
     modal.onDidDismiss(data => {
       if (data) {
+
+        const toast = this.toastCtrl.create({
+          message: 'Aqui está o local que você escolheu: ' + data.name,
+          duration: 3000,
+          position: 'bottom',
+        });
+        toast.present();
 
         const position = new google.maps.LatLng(data.coordinates[0], data.coordinates[1]);
         const mapOptions = {
@@ -138,7 +143,7 @@ export class DestinationPage {
           center: position
         }
         this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        const marker = new google.maps.Marker({
+        new google.maps.Marker({
           position: position,
           map: this.map
         });
@@ -155,6 +160,13 @@ export class DestinationPage {
       }
     });
     modal.present();
+  }
+
+  continue() {
+    this.navCtrl.push(ParkingsPage, {
+      coordinates: this.coordinates,
+      originCoordinates: this.originCoordinates
+    });
   }
 
 }

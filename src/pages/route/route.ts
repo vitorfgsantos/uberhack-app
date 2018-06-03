@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 
 declare var google;
 
@@ -60,7 +60,7 @@ export class RoutePage {
     this.mapd = new google.maps.Map(document.getElementById('mapd'), mapOptions);
     this.directionsDisplay.setMap(this.mapd);
 
-    const marker = new google.maps.Marker({
+    new google.maps.Marker({
       position: this.startPosition,
       map: this.mapd,
     });
