@@ -1,11 +1,72 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      About
+      Você chegou!
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+
+  <p>
+    Veja quais são as opções disponíveis para chegar no seu endereço:
+  </p>
+
+  <ion-list>
+    <ion-list-header>
+      Ecofriendly
+    </ion-list-header>
+
+    <ion-item *ngIf="!mapsRouters.walking">
+      Carregando...
+    </ion-item>
+    <ion-item *ngIf="mapsRouters.walking">
+      <ion-thumbnail item-start>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR78NUwUpKHhokTkoQd1PFGjmFAHtOxMfMqT5QazR6cduevOlB">
+      </ion-thumbnail>
+      <h2>Caminhando</h2>
+      <p>{{mapsRouters.walking.routes[0].legs[0].duration.text}} • Grátis</p>
+      <button ion-button clear item-end>Ver</button>
+    </ion-item>
+
+    <ion-item *ngIf="!mapsRouters.bicycling">
+      Carregando...
+    </ion-item>
+    <ion-item *ngIf="mapsRouters.bicycling">
+      <ion-thumbnail item-start>
+        <img src="https://www.intervinilo.com/images/stories/virtuemart/product/Bicicleta%20logo.jpg">
+      </ion-thumbnail>
+      <h2>Caminhando</h2>
+      <p>{{mapsRouters.bicycling.routes[0].legs[0].duration.text}} • Grátis</p>
+      <button ion-button clear item-end>Ver</button>
+    </ion-item>
+
+    <ion-item *ngIf="!mapsRouters.transit">
+      Carregando...
+    </ion-item>
+    <ion-item *ngIf="mapsRouters.transit">
+      <ion-thumbnail item-start>
+        <img src="https://ciudadpedestre.files.wordpress.com/2014/02/logo-bus.png">
+      </ion-thumbnail>
+      <h2>Transporte público</h2>
+      <p>{{mapsRouters.transit.routes[0].legs[0].duration.text}} • Grátis</p>
+      <button ion-button clear item-end>Ver</button>
+    </ion-item>
+
+    <ion-list-header>
+      Uber
+    </ion-list-header>
+    <ion-item *ngIf="!mapsRouters.uberRouters">
+      Carregando...
+    </ion-item>
+    <ion-item *ngFor="let modal of uberRouters">
+      <ion-thumbnail item-start>
+        <img src="https://static.meionorte.com/uploads/imagens/2018/3/4/4867c4e8-8ac0-4cc8-bc9e-56270585bf41.png">
+      </ion-thumbnail>
+      <h2>{{modal.display_name}}</h2>
+      <p>{{(modal.duration / 60) | number:0}}m • {{modal.estimate}}</p>
+      <button ion-button clear item-end>Ver</button>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
