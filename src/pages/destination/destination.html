@@ -5,23 +5,15 @@
 </ion-header>
 
 <ion-content text-center>
-  
-    <ion-list>            
-        <ion-item>
-          <ion-label>Para onde ir?</ion-label>
-          <ion-input type="text" [(ngModel)]="destinationPosition"></ion-input>
-        </ion-item>
-    
-        <div padding>
-          <button ion-button (click)="buscarLocal()">Buscar local</button>
-        </div>
-    </ion-list>
 
-  <form (ngSubmit)="continue()" #registerForm="ngForm">    
-    <div padding>
-      <button ion-button full type="submit" [disabled]="!name">Continuar</button>
-    </div>
-  </form>
+  <button ion-button color="light" icon-left class="location-btn">
+    <ion-icon name="bookmark"></ion-icon>Meu local
+  </button>
+
+  <button ion-button color="dark" round icon-right (click)="continue()" class="continue-btn">
+    Continuar
+    <ion-icon name="arrow-forward"></ion-icon>
+  </button>
 
   <div #map id="map"></div>
 
