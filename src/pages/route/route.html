@@ -1,11 +1,16 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      About
-    </ion-title>
+    <ion-title>Rota</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
+    <ion-list>            
+        <div padding>
+          <button ion-button (click)="calculateRoute()">Traçar rota</button>
+        </div>
+      </ion-list>
+
+<div #map id="map"></div>
 </ion-content>

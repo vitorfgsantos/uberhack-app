@@ -17,4 +17,8 @@ export class DestinationPage {
     this.navCtrl.setRoot(DestinationPage)
   }
 
+  buscarLocal() {
+    
+  }
+
 }

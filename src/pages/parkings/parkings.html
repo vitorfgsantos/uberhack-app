@@ -1,17 +1,20 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Contact
-    </ion-title>
+    <ion-title>Estacionamentos</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
+  <ion-list>    
+      <ion-card *ngFor="let estacionamento of estacionamento">
+          <div class="mapa">
+              <img src="{{ estacionamento.mapa }}">
+          </div>
+
+          <ion-item>
+              <h2 text-wrap>{{ estacionamento.nome }}</h2>
+              <p>{{ estacionamento.vagas }}</p>
+            </ion-item>                  
+        </ion-card>
   </ion-list>
 </ion-content>
