@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ParkingsService {
   // url: string = environment.url;
-  // url: string = 'https://uberhack-api.herokuapp.com/v1';
-  url: string = 'http://localhost:3000/v1';
+  url: string = 'https://uberhack-api.herokuapp.com/v1';
+  // url: string = 'http://localhost:3000/v1';
 
   constructor(
     private http: HttpClient

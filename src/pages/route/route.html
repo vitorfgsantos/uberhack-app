@@ -4,13 +4,12 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-list>
+    <div padding>
+      Aqui está sua rota:
+    </div>
+  </ion-list>
 
-    <ion-list>            
-        <div padding>
-          <button ion-button (click)="calculateRoute()">Traçar rota</button>
-        </div>
-      </ion-list>
-
-<div #map id="map"></div>
+  <div #map id="map"></div>
 </ion-content>

@@ -4,9 +4,6 @@ import { IonicPage } from 'ionic-angular';
 
 declare var google;
 
-/**
- * https://developers.google.com/maps/documentation/javascript/directions
- */
 @Component({
   selector: 'page-route',
   templateUrl: 'route.html'
@@ -24,17 +21,13 @@ export class RoutePage {
 
   constructor(public navParams: NavParams) {
     this.coordinates = navParams.get('coordinates');
-    this.parking = navParams.get('coordinates');
-  }
-
-  ionViewDidLoad() {
+    this.parking = navParams.get('parking');
 
     this.initializeMap();
   }
 
   initializeMap() {
-    this.startPosition = new google.maps.LatLng(-21.763409, -43.349034);
-
+    this.startPosition = new google.maps.LatLng(this.coordinates.lat, this.coordinates.lng);
     const mapOptions = {
       zoom: 18,
       center: this.startPosition,
@@ -43,25 +36,24 @@ export class RoutePage {
 
     this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
     this.directionsDisplay.setMap(this.map);
-
+    debugger
     const marker = new google.maps.Marker({
       position: this.startPosition,
       map: this.map,
     });
+
+
+    // this.calculateRoute();
   }
 
   calculateRoute() {
-    if (this.destinationPosition && this.originPosition) {
-      const request = {
-
-        // Pode ser uma coordenada (LatLng), uma string ou um lugar
-        origin: this.originPosition,
-        destination: this.destinationPosition,
-        travelMode: 'DRIVING'
-      };
-
-      this.traceRoute(this.directionsService, this.directionsDisplay, request);
-    }
+    const request = {
+      // origin: String(this.coordinates.lat) + ', ' + this.coordinates.lng,
+      origin: 'Av. Paulista, 1374 - Bela Vista, São Paulo - SP, 01310-100',
+      destination: this.parking.address.street + ', ' + this.parking.address.number + ' - ' + this.parking.address.district + ', ' + this.parking.address.city + ' - ' + this.parking.address.state,
+      travelMode: 'DRIVING'
+    };
+    this.traceRoute(this.directionsService, this.directionsDisplay, request);
   }
 
   traceRoute(service: any, display: any, request: any) {
