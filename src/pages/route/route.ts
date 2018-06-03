@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { IonicPage } from 'ionic-angular';
 
 declare var google;
 
@@ -11,7 +10,7 @@ declare var google;
 export class RoutePage {
   directionsService = new google.maps.DirectionsService();
   directionsDisplay = new google.maps.DirectionsRenderer();
-  map: any;
+  mapd: any;
   startPosition: any;
   originPosition: string;
   destinationPosition: string;
@@ -22,28 +21,50 @@ export class RoutePage {
   constructor(public navParams: NavParams) {
     this.coordinates = navParams.get('coordinates');
     this.parking = navParams.get('parking');
+  }
 
+  ionViewDidLoad() {
     this.initializeMap();
   }
 
   initializeMap() {
-    this.startPosition = new google.maps.LatLng(this.coordinates.lat, this.coordinates.lng);
+    // this.startPosition = new google.maps.LatLng(this.coordinates.lat, this.coordinates.lng);
+    // const mapOptions = {
+    //   zoom: 18,
+    //   center: this.startPosition,
+    //   disableDefaultUI: true
+    // }
+
+    // this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    // this.directionsDisplay.setMap(this.map);
+    // debugger
+    // const marker = new google.maps.Marker({
+    //   position: this.startPosition,
+    //   map: this.map,
+    // });
+
+
+    // this.calculateRoute();
+
+
+
+
+    this.startPosition = new google.maps.LatLng(-21.763409, -43.349034);
+
     const mapOptions = {
       zoom: 18,
       center: this.startPosition,
       disableDefaultUI: true
     }
 
-    this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    this.directionsDisplay.setMap(this.map);
-    debugger
+    this.mapd = new google.maps.Map(document.getElementById('mapd'), mapOptions);
+    this.directionsDisplay.setMap(this.mapd);
+
     const marker = new google.maps.Marker({
       position: this.startPosition,
-      map: this.map,
+      map: this.mapd,
     });
 
-
-    // this.calculateRoute();
   }
 
   calculateRoute() {

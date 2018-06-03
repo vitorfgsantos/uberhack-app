@@ -14,8 +14,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ModalsService } from '../services/modals.service';
 import { ParkingsService } from '../services/parkings.service';
+import { HeatAreasService } from './../services/heatareas.service';
 
 import { Geolocation } from '@ionic-native/geolocation';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
+
 
 @NgModule({
   declarations: [
@@ -45,8 +48,10 @@ import { Geolocation } from '@ionic-native/geolocation';
     SplashScreen,
     ModalsService,
     ParkingsService,
+    HeatAreasService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Geolocation
+    Geolocation,
+    LaunchNavigator
   ]
 })
 export class AppModule {}

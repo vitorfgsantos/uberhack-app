@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list>
-      <ion-card *ngFor="let parking of parkings" (click)="next(parking)">
+      <ion-card *ngFor="let parking of parkings" (click)="showPopup(parking)">
           <div class="mapa">
               <img src="{{ parking.map }}">
           </div>
