@@ -14,3 +14,6 @@ Com isso visamos melhorar a mobilidade dos grandes centros, gerando economia e c
 ## Tecnologias
 Aplicativo desenvolvido com a última versão do Ionic, em paralelo com uma API Node.JS escrita utilizando as mais últimas versões do EcmaScript (ES6, ES7), com persistências de dados em um banco MongoDB.
 Todas as aplicações online via Heroku e MbLab.
+` https://mobilehub-app.herokuapp.com/
+` https://uberhack-api.herokuapp.com/
+` ds245150.mlab.com:45150
