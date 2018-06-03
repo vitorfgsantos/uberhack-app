@@ -13,9 +13,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ModalsService } from '../services/modals.service';
+import { ParkingsService } from '../services/parkings.service';
 
 import { Geolocation } from '@ionic-native/geolocation';
-
 
 @NgModule({
   declarations: [
@@ -44,6 +44,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     StatusBar,
     SplashScreen,
     ModalsService,
+    ParkingsService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation
   ]

@@ -5,16 +5,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>    
-      <ion-card *ngFor="let estacionamento of estacionamento">
+  <ion-list>
+      <ion-card *ngFor="let parking of parkings" (click)="next(parking)">
           <div class="mapa">
-              <img src="{{ estacionamento.mapa }}">
+              <img src="{{ parking.map }}">
           </div>
 
           <ion-item>
-              <h2 text-wrap>{{ estacionamento.nome }}</h2>
-              <p>{{ estacionamento.vagas }}</p>
-            </ion-item>                  
+              <h2 text-wrap>{{ parking.name }}</h2>
+              <p>vagas livres: {{ parking.lots.free }}</p>
+              <p>vagas ocupadas: {{ parking.lots.busy }}</p>
+              <p>Custo por hora: {{ parking.cost | currency:'R$' }}</p>
+            </ion-item>
         </ion-card>
   </ion-list>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { IonicPage } from 'ionic-angular';
 
 declare var google;
@@ -19,9 +19,16 @@ export class RoutePage {
   originPosition: string;
   destinationPosition: string;
 
-  constructor() { }
+  parking: any;
+  coordinates: any;
+
+  constructor(public navParams: NavParams) {
+    this.coordinates = navParams.get('coordinates');
+    this.parking = navParams.get('coordinates');
+  }
 
   ionViewDidLoad() {
+
     this.initializeMap();
   }
 
@@ -46,7 +53,7 @@ export class RoutePage {
   calculateRoute() {
     if (this.destinationPosition && this.originPosition) {
       const request = {
-        
+
         // Pode ser uma coordenada (LatLng), uma string ou um lugar
         origin: this.originPosition,
         destination: this.destinationPosition,

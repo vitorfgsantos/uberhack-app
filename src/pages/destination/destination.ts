@@ -13,6 +13,7 @@ declare var google;
 export class DestinationPage {
 
   map: any;
+  coordinates: any;
 
   constructor(
     public navCtrl: NavController,
@@ -32,13 +33,19 @@ export class DestinationPage {
           map: this.map
         });
 
+        this.coordinates = {
+          lat: position.lat(),
+          lng: position.lng()
+        }
       }).catch((error) => {
         console.log('Erro ao recuperar sua posição', error);
       });
   }
 
   continue() {
-    this.navCtrl.setRoot(ParkingsPage)
+    this.navCtrl.push(ParkingsPage, {
+      coordinates: this.coordinates
+    });
   }
 
 }
