@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-navbar>
+    <ion-navbar text-center class="bg-brown">
     <ion-title>Estacionamentos</ion-title>
-  </ion-navbar>
+  </ion-navbar>  
 </ion-header>
 
 <ion-content>
@@ -12,9 +12,9 @@
           </div>
 
           <ion-item>
-              <h2><b>text-wrap>{{ parking.name }}</b></h2>
-              <p>vagas livres: {{ parking.lots.free }}</p>
-              <p>vagas ocupadas: {{ parking.lots.busy }}</p>
+              <h2><b>{{ parking.name }}</b></h2>
+              <p>Vagas livres: {{ parking.lots.free }}</p>
+              <p>Vagas ocupadas: {{ parking.lots.busy }}</p>
               <p>Custo por hora: {{ parking.cost | currency:'R$' }}</p>
             </ion-item>
         </ion-card>
