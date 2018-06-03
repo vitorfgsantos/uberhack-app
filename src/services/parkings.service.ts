@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
+import ENVIROMENT from '../environments/environment';
+
 @Injectable()
 export class ParkingsService {
-  // url: string = environment.url;
-  url: string = 'https://uberhack-api.herokuapp.com/v1';
-  // url: string = 'http://localhost:3000/v1';
+  url: string = ENVIROMENT.url;
 
   constructor(
     private http: HttpClient

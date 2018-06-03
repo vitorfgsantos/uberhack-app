@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, NavParams } from 'ionic-angular';
+import { NavController, IonicPage, NavParams, AlertController } from 'ionic-angular';
 import { ParkingsService } from './../../services/parkings.service';
 import { RoutePage } from './../route/route';
+import { LaunchNavigatorOptions, LaunchNavigator } from '@ionic-native/launch-navigator';
+import { RouteFinishedPage } from '../route-finished/route-finished';
 
 @Component({
   selector: 'page-parkings',
@@ -15,7 +17,9 @@ export class ParkingsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public parkingsService: ParkingsService
+    public parkingsService: ParkingsService,
+    public alertCtrl: AlertController,
+    public launchNavigator: LaunchNavigator
   ) {
     this.coordinates = navParams.get('coordinates');
     this.loadParkings();
@@ -36,11 +40,38 @@ export class ParkingsPage {
     return 'https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=400x150&markers=color:red|' + formattedAddress + '&key=AIzaSyCXvmVx1Px1Gpv8yKWQzW1N3ySfjyoFIEs'
   }
 
-  next(parking) {
-    this.navCtrl.push(RoutePage, {
-      coordinates: this.coordinates,
-      parking: parking
+  showPopup(parking) {
+    const confirm = this.alertCtrl.create({
+      title: 'Boa escolha! ;)',
+      message: 'Vamos iniciar sua rota e você será redirecionado para o seu app de navegação.',
+      buttons: [{
+        text: 'Cancelar',
+      }, {
+        text: 'Ok, vamos lá!',
+        handler: () => {
+          let options: LaunchNavigatorOptions = {
+            start: parking.address.street + ', ' + parking.address.number + ' - ' + parking.address.district + ', ' + parking.address.city + ' - ' + parking.address.state,
+          };
+
+          this.launchNavigator.navigate('Toronto, ON', options)
+            .then(
+              success => {
+                this.navCtrl.push(RouteFinishedPage, {
+                  coordinates: this.coordinates,
+                  parking: parking
+                });
+              },
+              error => {
+                this.navCtrl.push(RouteFinishedPage, {
+                  coordinates: this.coordinates,
+                  parking: parking
+                });
+              }
+            );
+        }
+      }]
     });
+    confirm.present();
   }
 
 }
